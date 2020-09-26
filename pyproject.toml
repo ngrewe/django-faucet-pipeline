@@ -23,7 +23,8 @@ Django = ">=2.2"
 python = "^3.7"
 
 [tool.poetry.dev-dependencies]
-PyHamcrest = ">=1.9.0"
+django-stubs = "~=1.5.0" 
+mypy = "~=0.770"
 pytest = ">=5.4.1"
 pytest-cov = ">=2.8.1"
 pytest-mock = ">=3.1.0"
