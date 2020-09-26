@@ -1,10 +1,9 @@
 import collections
 import json
 import logging
-from pathlib import Path
 
 from django import template
-from typing import Dict, Optional
+from typing import Dict, Optional, ClassVar
 
 from django.apps import apps
 from django.conf import settings
@@ -16,6 +15,7 @@ LOGGER = logging.getLogger("django_faucet_pipeline")
 
 class FaucetManifestLoader:
 
+    _instance: ClassVar[Optional["FaucetManifestLoader"]] = None
     _manifest: Dict[str, str]
 
     def __init__(self):
@@ -40,14 +40,18 @@ class FaucetManifestLoader:
             return
         self._manifest = manifest
 
-
-LOADER = FaucetManifestLoader()
+    @classmethod
+    def instance(cls) -> "FaucetManifestLoader":
+        if not cls._instance:
+            cls._instance = cls()
+        return cls._instance
 
 
 @register.simple_tag()
 def static_faucet(asset: str) -> Optional[str]:
+    loader = FaucetManifestLoader.instance()
     try:
-        return LOADER.manifest[asset]
+        return loader.manifest[asset]
     except KeyError:
         LOGGER.error("Could not resolve asset %s", asset)
     return None

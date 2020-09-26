@@ -2,7 +2,7 @@ from unittest.mock import patch
 from django.template import Template
 from django.template.loader import get_template
 
-from django_faucet_pipeline.templatetags.faucet_pipeline import LOADER
+from django_faucet_pipeline.templatetags.faucet_pipeline import FaucetManifestLoader
 
 
 def test_renders_asset_url_to_template():
@@ -26,8 +26,8 @@ def test_renders_asset_url_even_if_manifest_is_faulty(settings):
 def test_no_reloads_unless_debug(settings):
     settings.DEBUG = False
     with patch(
-        "django_faucet_pipeline.templatetags.faucet_pipeline.LOADER._load_manifest",
-        wraps=LOADER._load_manifest,
+        "django_faucet_pipeline.templatetags.faucet_pipeline.FaucetManifestLoader._instance._load_manifest",
+        wraps=FaucetManifestLoader.instance()._load_manifest,
     ) as patched:
         for _ in range(0, 5):
             template: Template = get_template("template.txt")
@@ -38,8 +38,8 @@ def test_no_reloads_unless_debug(settings):
 def test_reloads_with_debug(settings):
     settings.DEBUG = True
     with patch(
-        "django_faucet_pipeline.templatetags.faucet_pipeline.LOADER._load_manifest",
-        wraps=LOADER._load_manifest,
+        "django_faucet_pipeline.templatetags.faucet_pipeline.FaucetManifestLoader._instance._load_manifest",
+        wraps=FaucetManifestLoader.instance()._load_manifest,
     ) as patched:
         for _ in range(0, 5):
             template: Template = get_template("template.txt")
