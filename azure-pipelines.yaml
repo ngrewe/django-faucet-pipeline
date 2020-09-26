@@ -1,0 +1,39 @@
+trigger:
+  branches:
+    include:
+    - "*"
+  tags:
+    include:
+    - "v*"
+pr:
+  branches:
+    include:
+    - '*'
+resources:
+  repositories:
+  - repository: tox
+    type: github
+    endpoint: ngrewe
+    name: tox-dev/azure-pipelines-template
+    ref: refs/tags/0.2
+stages:
+  - stage: test
+    displayName: Run Tests
+    jobs:
+    - template: run-tox-env.yml@tox
+      parameters:
+        tox_version: 'tox'
+        jobs:
+          'py37-black':
+            image: [linux]
+          'py37-mypy':
+            image: [linux]
+          'py37-django22':
+            image: [linux]
+          'py37-django30':
+            image: [linux]
+          'py37-django31':
+            image: [linux]
+        coverage:
+          with_toxenv: 'py37-coverage'
+          for_envs: [py37_django22, py37_django30, py37_django31]
