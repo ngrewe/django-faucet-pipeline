@@ -37,3 +37,27 @@ stages:
         coverage:
           with_toxenv: 'coverage'
           for_envs: [py37_django22, py37_django30, py37_django31]
+  - stage: build
+    displayName: Build Packages
+    dependsOn: test
+    condition: succeeded()
+    pool:
+      vmImage: 'ubuntu-18.04'
+    jobs:
+    - job: python_dist
+      displayName: Build Python Distributions
+      steps:
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: '3.7'
+            addToPath: true
+            architecture: 'x64'
+        - script: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+          displayName: Install Build Tools
+        - script: |
+            export PATH=$HOME/.poetry/bin:$PATH
+            poetry build
+          displayName: Build Distributions
+        - publish: dist
+          name: python_dists
+          displayName: Publish Distributions
