@@ -35,5 +35,5 @@ stages:
           'py37_django31':
             image: [linux]
         coverage:
-          with_toxenv: 'py37_coverage'
+          with_toxenv: 'coverage'
           for_envs: [py37_django22, py37_django30, py37_django31]
