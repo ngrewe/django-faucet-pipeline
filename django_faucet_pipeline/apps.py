@@ -17,7 +17,7 @@ class FaucetPipelineConfig(AppConfig):
     def manifest(self) -> Path:
         return Path(
             getattr(settings, "FAUCET_PIPELINE_MANIFEST", None)
-            or Path(getattr(settings, "STATIC_ROOT", "") or "") / "manifest.json"
+            or Path(getattr(settings, "BASE_DIR", "") or "") / "manifest.json"
         )
 
 
