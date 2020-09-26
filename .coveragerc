@@ -1,8 +1,15 @@
 [run]
+data_file = .tox/.coverage
+parallel = True
 include = 
   */django_faucet_pipeline/*
+omit =
+    */django_faucet_pipeline/tests/*
 
 [paths]
 source =
     django_faucet_pipeline/
     .tox/*/lib/python*/site-packages/django_faucet_pipeline/
+
+[xml]
+output = .tox/coverage.xml
