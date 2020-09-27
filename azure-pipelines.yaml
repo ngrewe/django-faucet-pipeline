@@ -61,3 +61,42 @@ stages:
         - publish: dist
           name: python_dists
           displayName: Publish Distributions
+  - stage: publish
+    displayName: Publish Packages
+    dependsOn: build
+    condition: and(succeeded(), startsWith(variables['build.sourceBranch'], 'refs/tags/'))
+    pool:
+      vmImage: 'ubuntu-18.04'
+    jobs:
+      - job: pypi_publish
+        displayName: Publish PyPi Packages
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.7'
+              addToPath: true
+              architecture: 'x64'
+          - script: python -m pip install twine
+            displayName: Install Publishing Tools
+          - download: current
+            artifact: build.pythondist
+            displayName: Download Python Distributions
+          - task: TwineAuthenticate@1
+            displayName: Authenticate PyPi Service Connection
+            inputs:
+              pythonUploadServiceConnection: 'Azure PyPi'
+          - script: |
+              python -m twine upload --skip-existing --verbose --repository azure-pypi --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/build.pythondist/*.*
+            displayName: Publish to PyPi
+      - job: github_publish
+        displayName: Publish Github Release
+        steps:
+          - download: current
+            displayName: Download Distributions
+          - task: GithubRelease@0
+            displayName: 'Create GitHub Release'
+            inputs:
+              gitHubConnection: github.com_ngrewe
+              repositoryName: ngrewe/django-faucet-pipeline
+              assets: |
+                $(Pipeline.Workspace)/build.pythondist/*
