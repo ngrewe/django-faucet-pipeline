@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "django-faucet-pipeline"
 version = "1.0.0"
-description = "A Django integration for faucet-pipelines"
+description = "A Django integration for faucet-pipeline"
 authors = ["Niels Grewe <niels.grewe@halbordnung.de>"]
 readme = "README.md"
 repository = "https://github.com/ngrewe/django-faucet-pipeline"
