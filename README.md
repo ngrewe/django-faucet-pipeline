@@ -71,7 +71,6 @@ of the asset to the current (potentially fingerprinted) name.
     <title>Hello World</title>
   </head>
   <body> 
-  <div id="container"></div>
   <script src="{% static_faucet "bundle.js" %}" type="text/javascript"></script>
   </body>
 </html>
