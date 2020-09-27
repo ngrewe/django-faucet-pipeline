@@ -1,6 +1,6 @@
 # Django Faucet Pipeline
 
-[![Build Status](https://dev.azure.com/glaux/update-broker/_apis/build/status/ngrewe.django-faucet-pipeline?repoName=ngrewe%2Fdjango-faucet-pipeline&branchName=main)](https://dev.azure.com/glaux/update-broker/_build/latest?definitionId=8&repoName=ngrewe%2Fdjango-faucet-pipeline&branchName=main)
+[![Build Status](https://dev.azure.com/glaux/update-broker/_apis/build/status/ngrewe.django-faucet-pipeline?repoName=ngrewe%2Fdjango-faucet-pipeline&branchName=main)](https://dev.azure.com/glaux/update-broker/_build/latest?definitionId=8&repoName=ngrewe%2Fdjango-faucet-pipeline&branchName=main) [![PyPI version](https://badge.fury.io/py/django-faucet-pipeline.svg)](https://badge.fury.io/py/django-faucet-pipeline)
 
 django-faucet-pipeline integrates [faucet-pipeline](https://www.faucet-pipeline.org) with Django. It allows you to
 transparently reference assets created by faucet-pipeline in Django templates and operate on them using the [django.contrib.staticfiles](https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/) app.
