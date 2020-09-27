@@ -82,3 +82,7 @@ The behaviour of django-faucet-pipeline will change depending on whether the Dja
 to true or not. If debug mode is enabled, the manifest file will be re-read when ever a template is rendered.
 In production, you should have `DEBUG` set to `False`, in which case `manifest.json` will be read once on first
 access and then cached indefinitely.
+
+## Example Project
+
+An example project demonstrating the this integration is available [here](https://github.com/ngrewe/django-faucet-pipeline-example).
